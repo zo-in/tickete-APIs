@@ -22,7 +22,7 @@ export class InventoryController {
   // Creating a temporary route call to syncService to populate the DB.
   @Post("/sync")
   async triggerSync() {
-    await this.syncService.sync(30); // next 2 days for quick testing
+    await this.syncService.sync(2); // next 2 days for quick testing
     return { message: "Sync complete" };
   }
 }
