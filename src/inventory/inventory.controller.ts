@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Controller, Get, Param, Query } from "@nestjs/common";
 import { InventoryService } from "./inventory.service";
 import { SyncService } from "./sync.service";
 
@@ -9,20 +9,28 @@ export class InventoryController {
     private readonly syncService: SyncService
   ) {}
 
+  // ✅ Base ping route (for debugging deployment)
+  @Get("ping")
+  ping() {
+    return { message: "pong" };
+  }
+
+  // ✅ GET /api/v1/experience/:id/dates
   @Get(":id/dates")
-  async getDates(@Param("id") id: string) {
+  getDates(@Param("id") id: string) {
     return this.service.getDates(Number(id));
   }
 
+  // ✅ GET /api/v1/experience/:id/slots?date=YYYY-MM-DD
   @Get(":id/slots")
-  async getSlots(@Param("id") id: string, @Query("date") date: string) {
+  getSlots(@Param("id") id: string, @Query("date") date: string) {
     return this.service.getSlots(Number(id), date);
   }
 
-  // Creating a temporary route call to syncService to populate the DB.
-  @Post("/sync")
+  // ✅ Optional manual sync trigger
+  @Get("sync")
   async triggerSync() {
-    await this.syncService.sync(2); // next 2 days for quick testing
-    return { message: "Sync complete" };
+    await this.syncService.sync(2); // next 2 days
+    return { message: "Manual sync complete" };
   }
 }

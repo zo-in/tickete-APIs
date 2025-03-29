@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { ScheduleModule } from "@nestjs/schedule";
 import { ConfigModule } from "@nestjs/config";
+import { ScheduleModule } from "@nestjs/schedule";
 import { PrismaModule } from "./prisma/prisma.module";
 import { InventoryModule } from "./inventory/inventory.module";
 import { CronService } from "./cron/cron.service";
